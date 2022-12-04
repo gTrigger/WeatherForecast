@@ -1,4 +1,7 @@
-# weather-forecast
+# Test task
+
+You can check served version here:
+https://gtrigger-weather-forecast.netlify.app/
 
 ## Project setup
 ```

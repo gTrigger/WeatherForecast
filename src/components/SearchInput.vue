@@ -1,7 +1,7 @@
 <template>
   <v-container class="app-search-input">
     <v-combobox
-        :value="item"
+        v-model="item"
         :items="items"
         :rules="[ required ]"
         :placeholder="$t('searchInputPlaceholder')"
