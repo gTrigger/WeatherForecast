@@ -22,15 +22,21 @@
   </v-container>
 </template>
 
-<script>
-  export default {
+<script lang="ts">
+  import Vue from "vue";
+
+  interface SearchInputData {
+    item: string | null;
+  }
+
+  export default Vue.extend({
     name: 'SearchInput',
     props: {
       items: {
         required: true,
       }
     },
-    data() {
+    data(): SearchInputData {
       return {
         item: null,
       };
@@ -39,16 +45,16 @@
       emitSearch() {
         this.$emit('search', this.item);
       },
-      updateSearch(value){
+      updateSearch(value: string) {
         this.item = value;
       },
-      required(value) {
+      required(value: string): string | boolean {
         if (value && value.length) {
           return true;
         }
 
-        return this.$t('searchInputErrorRequired');
+        return String(this.$t('searchInputErrorRequired'));
       },
     },
-  };
+  });
 </script>

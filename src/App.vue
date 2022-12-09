@@ -8,15 +8,16 @@
   </v-app>
 </template>
 
-<script>
-  import WeatherForecast from './views/WeatherForecast';
-  import AppHeader from "@/components/AppHeader";
+<script lang="ts">
+  import Vue from "vue";
+  import WeatherForecast from '@/views/WeatherForecast.vue';
+  import AppHeader from "@/components/AppHeader.vue";
 
-  export default {
+  export default Vue.extend({
     name: 'App',
     components: {
       AppHeader,
       WeatherForecast,
     },
-  };
+  });
 </script>

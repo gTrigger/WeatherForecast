@@ -6,31 +6,27 @@
   </v-container>
 </template>
 
-<script>
-  export default {
+<script lang="ts">
+  import Vue from "vue";
+  import { StatusCode } from "@/common/types/commonTypes";
+
+  export default Vue.extend({
     name: 'ErrorTile',
     props: {
       code: {
         required: true,
       }
     },
-    data() {
-      return {
-        StatusCodes: {
-          NOT_FOUND: 404,
-        },
-      }
-    },
     computed: {
-      errorMessage() {
-        if (this.code === this.StatusCodes.NOT_FOUND) {
-          return this.$t('nothingFoundError');
+      errorMessage(): string {
+        if (this.code === StatusCode.NOT_FOUND) {
+          return String(this.$t('nothingFoundError'));
         }
 
-        return this.$t('genericError');
+        return String(this.$t('genericError'));
       }
     },
-  };
+  });
 </script>
 
 <style scoped lang="scss">

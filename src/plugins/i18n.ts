@@ -4,6 +4,7 @@ import { merge } from 'lodash';
 import commonTranslations from "@/translations/common";
 import weatherTranslations from "@/translations/weather";
 import CookieService from "@/services/CookieService";
+import { CookieType } from "@/common/types/cookieTypes";
 
 const messages = merge(
     {},
@@ -11,15 +12,15 @@ const messages = merge(
     weatherTranslations,
 );
 
-export const locales = {
-    EN: 'en',
-    RU: 'ru'
+export enum AppLocale {
+    EN = 'en',
+    RU = 'ru'
 }
 
 Vue.use(VueI18n);
 
 export default new VueI18n({
-    locale: CookieService.getCookie('locale') || locales.EN,
+    locale: CookieService.getCookie(CookieType.LOCALE) || AppLocale.EN,
     messages,
     silentFallbackWarn: true,
 });

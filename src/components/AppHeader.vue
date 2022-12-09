@@ -9,15 +9,16 @@
   </header>
 </template>
 
-<script>
-  import LanguageSelect from './LanguageSelect'
+<script lang="ts">
+  import Vue from "vue";
+  import LanguageSelect from '@/components/LanguageSelect.vue'
 
-  export default {
+  export default Vue.extend({
     name: 'AppHeader',
     components: {
       LanguageSelect,
     }
-  }
+  });
 </script>
 
 <style scoped lang="scss">

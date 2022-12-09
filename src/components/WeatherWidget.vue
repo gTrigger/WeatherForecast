@@ -6,6 +6,7 @@
           <img
               class="widget-weather-type"
               :src="weatherIconSrc"
+              alt="weather-type"
           />
           <span class="widget-temperature">
             {{ temperature | round }}°C
@@ -74,18 +75,21 @@
   </v-container>
 </template>
 
-<script>
+<script lang="ts">
+  import Vue, { PropType } from "vue";
   import {
     mdiWeatherWindy,
     mdiWaterOutline ,
     mdiThermometer,
   } from '@mdi/js'
+  import { WeatherForecast } from "@/common/types/commonTypes";
 
-  export default {
+  export default Vue.extend({
     name: 'WeatherWidget',
     props: {
-      data: {
+      forecast: {
         required: true,
+        type: Object as PropType<WeatherForecast>,
       }
     },
     data() {
@@ -93,77 +97,76 @@
         mdiWeatherWindy,
         mdiWaterOutline,
         mdiThermometer,
-        item: null,
       };
     },
     computed: {
-      weatherIconSrc() {
-        return `http://openweathermap.org/img/w/${this.data.weather[0].icon}.png`;
+      weatherIconSrc(): string {
+        return `http://openweathermap.org/img/w/${this.forecast.weather[0].icon}.png`;
       },
-      temperature() {
-        return this.data.main.temp;
+      temperature(): number {
+        return this.forecast.main.temp;
       },
-      minTemperature() {
-        return this.data.main.temp_min;
+      minTemperature(): number {
+        return this.forecast.main.temp_min;
       },
-      maxTemperature() {
-        return this.data.main.temp_max;
+      maxTemperature(): number {
+        return this.forecast.main.temp_max;
       },
-      temperatureFeelsLike() {
-        return this.data.main.feels_like;
+      temperatureFeelsLike(): number {
+        return this.forecast.main.feels_like;
       },
-      windSpeed() {
-        return this.data.wind.speed;
+      windSpeed(): number {
+        return this.forecast.wind.speed;
       },
-      windDirection() {
-        const value = this.data.wind.deg;
+      windDirection(): string {
+        const value = this.forecast.wind.deg;
 
         if (value >= 22.5 && value < 67.5) {
-          return this.$t('directionNorthEast')
+          return String(this.$t('directionNorthEast'));
         }
 
         if (value >= 67.5 && value < 112.5) {
-          return this.$t('directionEast')
+          return String(this.$t('directionEast'));
         }
 
         if (value >= 112.5 && value < 157.5) {
-          return this.$t('directionSouthEast')
+          return String(this.$t('directionSouthEast'));
         }
 
         if (value >= 157.5 && value < 202.5) {
-          return this.$t('directionSouth')
+          return String(this.$t('directionSouth'));
         }
 
         if (value >= 202.5 && value < 247.5) {
-          return this.$t('directionSouthWest')
+          return String(this.$t('directionSouthWest'));
         }
 
         if (value >= 247.5 && value < 292.5) {
-          return this.$t('directionWest')
+          return String(this.$t('directionWest'));
         }
 
         if (value >= 292.5 && value < 337.5) {
-          return this.$t('directionNorthWest')
+          return String(this.$t('directionNorthWest'));
         }
 
-        return this.$t('directionNorth')
+        return String(this.$t('directionNorth'));
       },
-      humidity() {
-        return this.data.main.humidity;
+      humidity(): number {
+        return this.forecast.main.humidity;
       },
-      pressure() {
-        return this.data.main.pressure;
+      pressure(): number {
+        return this.forecast.main.pressure;
       },
     },
     filters: {
-      round: (value) => {
+      round: (value: number) => {
         return Math.round(value);
       },
-      convertHPaToMmHg: (value) => {
+      convertHPaToMmHg: (value: number) => {
         return Math.round(value * 0.75);
       },
     },
-  };
+  });
 </script>
 
 <style scoped lang="scss">
